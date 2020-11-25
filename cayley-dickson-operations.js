@@ -78,15 +78,14 @@ function multiplyCayleyDickson(w, z) {
 }
 
 Number.prototype.countDecimals = function () {
-  if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-  return this.toString().split(".")[1].length || 0;
+  let decimals = this.toString().split(".");
+  return decimals.length > 1 ? decimals[1].length : 0
 }
 
-// Bartok: 6 romanian dances for violin and piano => good stuff
+
 class CayleyDicksonNumber {
 
   constructor(number=[], units=[]) {
-
     if (typeof number === "string") {
       let parsed_number = this.parseNumberString(number);
       number = parsed_number.coeffs;
@@ -161,11 +160,11 @@ class CayleyDicksonNumber {
     let letter = /[a-z]/gi;
     let is_real_number = number_str.match(letter) === null? true: false;
 
-    function parseRealNumber() {
+    function parseRealNumber(number_str) {
       return {"coeffs": [parseFloat(number_str)], "units": [""]}
     }
 
-    function parseNonRealNumber() {
+    function parseNonRealNumber(number_str) {
       let sign = /[+-]/gi;
       let digit = /[0-9.]/g;
       let units = [];
@@ -194,9 +193,9 @@ class CayleyDicksonNumber {
     }
 
     if (is_real_number) {
-      return parseRealNumber();
+      return parseRealNumber(number_str);
     } else {
-      return parseNonRealNumber();
+      return parseNonRealNumber(number_str);
     }
 
   }
@@ -215,6 +214,10 @@ class CayleyDicksonNumber {
       number_units.push(field);
     }
     return number_units
+  }
+
+  getPrecision() {
+      return Math.max(...this.getCoeffs().map(v => v.countDecimals()));
   }
 
   toString(decimals=null) {
@@ -260,10 +263,8 @@ function operateOnCayleyDickson(e) {
   let number_str_q = document.getElementById("number-q").value;
   let p = new CayleyDicksonNumber(number_str_p);
   let q = new CayleyDicksonNumber(number_str_q);
-  let decimals = 2;
+  let decimals = Math.max(p.getPrecision(), q.getPrecision());
   let result_str = eval(`p.${selected_operation}(q).toString(${decimals})`);
   result_div.innerHTML = `$pq = ${result_str}$`;
   MathJax.Hub.Queue(["Typeset", MathJax.Hub, result_div]);
 }
-
-// TODO: Need to enable real input, also autogenerate a complex number when user enters disparate number types, e.g. one real and one quaternion. Also, number of decimals should be selected automatically based on maximum number of decimals set by user, at least as a default feature.
