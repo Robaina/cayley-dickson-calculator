@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="A calculator for Cayley-Dickson Algebras">
+    <meta name="keywords" content="Cayley-Dickson, algebra, multiplication table, normed division algebra">
+    <meta name="author" content="Semidán Robaina Estévez">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Cayley-Dickson Calculator</title>
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Coda" rel="stylesheet">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=default" async></script>
+</head>
+
+<body>
+
+  <div class="title-container">
+    <div class="title">Computing on Cayley-Dickson Algebras</div>
+  </div>
+
+  <div id="input-form">
+
+    <form id="myForm">
+      $p =$
+      <input class="number-input" type="text" id="number-p" name="number-p" value="1 + 1i + 2j + 3k + 1E - 2.5I + 1.2J + 3K">
+      </br>
+      $q = $
+      <input class="number-input" type="text" id="number-q" name="number-q" value="0 - 0.5i + 2j - 1k - 1.5E + 3.2I + 0.7J - 0.5K">
+      </br>
+
+      <input type="submit" class="form-button" id="add" value="+" name="operation" onclick="operateOnCayleyDickson(this);">
+      <input type="submit" class="form-button" id="subtract" name="operation" value="-" onclick="operateOnCayleyDickson(this);">
+      <input type="submit" class="form-button" id="multiply" name="operation" value="x" onclick="operateOnCayleyDickson(this);">
+      <input type="submit" class="form-button" id="divide" name="operation" value="÷" onclick="operateOnCayleyDickson(this) ;">
+    </form>
+
+    <div class="number-input" id="form-result"></div>
+
+  </div>
+
+  <article class="post_text">
+    <!-- I'm sure you have heard before of the complex numbers.
+
+    $$p = a_0 + a_1i$$
+
+    in which $i^2 = -1$ and where the coefficients $a_0, a_1$ are real numbers.
+
+    Perhaps you also have heard of the quaternions:
+
+    $$p = a_0 + a_1i + a_2j + a_3k$$
+
+    with $ijk = -1$ and $i^2 = j^2 = k^2 = -1$.
+
+    Now, look at this beauty: the algebra of octonions! The last normed division algebra of the Cayley - Dickson construction process. The one that it not ordered or commutative, not even associative!
+
+    $$p = a_0 + a_1i + a_2j + a_3k + a_4I + a_5J + a_6K + a_7E$$
+
+    The multiplication rule here is a little bit more complicated... But it can be visualized in a beautiful way with the help of the Fano plane shown below.
+
+    Ok..., for those of you who are like me, and despise doing calculations at hand, I have written a JavaScript function to do arithmetic with octonions! All you have to do is to type your octonions in the input boxes and choose which operation you would like do. Have fun! -->
+  </article>
+
+
+  <footer>
+    <p><a href="https://github.com/Robaina/Octonions">Semidán Robaina Estévez</a>, 2020. <br/>
+  </footer>
+
+  <script src="cayley-dickson-operations.js"></script>
+
+</body>
+
+</html>
