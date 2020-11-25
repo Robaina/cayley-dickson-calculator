@@ -1,12 +1,12 @@
 html, body {
 
-  --fontColor: rgb(201, 201, 201);
-  --backgroundColor: rgb(0, 0, 0);
-  --cell-color: rgba(50, 50, 50, 1);
+  --fontColor: rgb(70, 70, 70);
+  --backgroundColor: rgb(255, 255, 255);
+  --cell-color: rgba(168, 168, 168, 1);
   --highlighted-cell-color: rgb(51, 127, 190);
   --highlighted-text-color: rgb(62, 156, 235);
-  --number-color: rgb(240, 239, 239);
-  --number-input-color: rgb(33, 33, 33);
+  --numberColor: rgb(0, 0, 0);
+  --number-input-color: rgb(236, 236, 236);
   --border-color: rgb(159, 159, 159);
   --grid-width: 50vw;
   --grid-height: calc(0.5 * var(--grid-width));
@@ -19,12 +19,16 @@ html, body {
   background-color: var(--backgroundColor);
   overflow-x: hidden;
   scroll-behavior: smooth;
+
+  /* background-color: #ffffff; */
+  background-image: url("asfalt-dark.png");
+
 }
 
 .form-button {
-  background-color: var(--fancyColor);
-  filter: grayscale(100%);
-  color: white;
+  background-color: var(--number-input-color);
+  color: var(--fontColor);
+  font-size: 2em;
   padding: 14px 20px;
   margin: 8px 0;
   margin-top: 2%;
@@ -34,7 +38,7 @@ html, body {
 }
 
 .form-button:hover {
-  filter: grayscale(0%);
+  background-color: var(--fancyColor);
 }
 
 input {
@@ -47,7 +51,6 @@ input:focus{
 }
 
 #input-form {
-  color: var(--fontColor);
   width: 100vw;
   height: 30vh;
   text-align: center;
@@ -58,9 +61,10 @@ input:focus{
   width: 40%;
   height: 15%;
   margin-bottom: 1%;
+  border: none;
   background-color: var(--number-input-color);
   font-size: 1em;
-  color: var(--fontColor);
+  color: var(--numberColor);
   border-radius: 7px;
   align-items : center;
 }
@@ -71,6 +75,7 @@ input:focus{
   height: 10%;
   margin-top: 5%;
   font-size: 1.1em;
+  color: var(--numberColor);
   text-align: center;
 }
 

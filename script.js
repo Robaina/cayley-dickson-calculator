@@ -13,6 +13,25 @@ form.addEventListener('submit', handleForm);
 
 function operateOnCayleyDickson(e) {
   let selected_operation = e.id;
+  let displayed_operation;
+
+  switch (selected_operation) {
+    case "add":
+      displayed_operation = "p + q";
+      break;
+    case "subtract":
+      displayed_operation = "p - q";
+      break;
+    case "multiply":
+      displayed_operation = "pq";
+      break;
+    case "divide":
+      displayed_operation = "pq^{-1}";
+      break;
+    default:
+      displayed_operation = "pq";
+  }
+
   let result_div = document.getElementById("form-result");
   let number_str_p = document.getElementById("number-p").value;
   let number_str_q = document.getElementById("number-q").value;
@@ -22,7 +41,7 @@ function operateOnCayleyDickson(e) {
 
   if (p.isCayleyDickson() && q.isCayleyDickson()) {
     let result_str = eval(`p.${selected_operation}(q).toString(${decimals})`);
-    result_div.innerHTML = `$pq = ${result_str}$`;
+    result_div.innerHTML = `$${displayed_operation} = ${result_str}$`;
     MathJax.Hub.Queue(["Typeset", MathJax.Hub, result_div]);
   } else {
     alert("Enter a valid input!")
