@@ -29,58 +29,6 @@ Number.prototype.countDecimals = function () {
   return decimals.length > 1 ? decimals[1].length : 0
 }
 
-function conjugate(z) {
-  /* Compute conjugate of Cayley-Dickson number.
-     Takes array of coefficients
-  */
-  let z_star = [...z];
-  for (let i=1; i<z.length; i++) {
-    z_star[i] *= -1;
-  }
-  return z_star
-}
-
-function invert(z) {
-  /* Compute inverse of Cayley-Dickson number.
-     Takes array of coefficients
-  */
-  let z_inv = [];
-  let z_star = conjugate(z);
-  let z_norm = z.map(a => a**2).reduce((a, b) => a + b);
-  for (let a of z_star) {
-    z_inv.push(a / z_norm);
-  }
-  return z_inv;
-}
-
-function multiplyCayleyDickson(w, z) {
-  /* Multiply two Cayley-Dickson numbers
-     where w, z are arrays containing the
-     coefficients
-  */
-  let n = z.length;
-  if (n === 1) {
-    return [w.pop() * z.pop()]
-  }
-
-  let m = Math.floor(n / 2);
-  let a = w.slice(0, m);
-  let b = w.slice(m, n);
-  let c = z.slice(0, m);
-  let d = z.slice(m, n);
-  let ap = [...a];
-  let bp = [...b];
-  let cp = [...c];
-  let dp = [...d];
-
-  return multiplyCayleyDickson(a, c).subtract(
-    multiplyCayleyDickson(conjugate(d), b)).concat(
-      multiplyCayleyDickson(dp, ap).add(
-        multiplyCayleyDickson(bp, conjugate(cp)))
-    );
-
-}
-
 
 class CayleyDicksonNumber {
 
@@ -112,6 +60,58 @@ class CayleyDicksonNumber {
 
   }
 
+  _conjugate(z) {
+    /* Compute conjugate of Cayley-Dickson number.
+       Takes array of coefficients
+    */
+    let z_star = [...z];
+    for (let i=1; i<z.length; i++) {
+      z_star[i] *= -1;
+    }
+    return z_star
+  }
+
+  _invert(z) {
+    /* Compute inverse of Cayley-Dickson number.
+       Takes array of coefficients
+    */
+    let z_inv = [];
+    let z_star = this._conjugate(z);
+    let z_norm = z.map(a => a**2).reduce((a, b) => a + b);
+    for (let a of z_star) {
+      z_inv.push(a / z_norm);
+    }
+    return z_inv;
+  }
+
+  _multiplyCayleyDickson(w, z) {
+    /* Multiply two Cayley-Dickson numbers
+       where w, z are arrays containing the
+       coefficients
+    */
+    let n = z.length;
+    if (n === 1) {
+      return [w.pop() * z.pop()]
+    }
+
+    let m = Math.floor(n / 2);
+    let a = w.slice(0, m);
+    let b = w.slice(m, n);
+    let c = z.slice(0, m);
+    let d = z.slice(m, n);
+    let ap = [...a];
+    let bp = [...b];
+    let cp = [...c];
+    let dp = [...d];
+
+    return this._multiplyCayleyDickson(a, c).subtract(
+      this._multiplyCayleyDickson(this._conjugate(d), b)).concat(
+        this._multiplyCayleyDickson(dp, ap).add(
+          this._multiplyCayleyDickson(bp, this._conjugate(cp)))
+      );
+
+  }
+
   isCayleyDickson() {
     return Math.log2(this.getCoeffs().length).countDecimals() === 0
   }
@@ -136,7 +136,7 @@ class CayleyDicksonNumber {
     let result = new CayleyDicksonNumber([], this.getUnits());
     let w = this.getCoeffs();
     let z = other.getCoeffs();
-    let result_coeffs = multiplyCayleyDickson(w, z);
+    let result_coeffs = this._multiplyCayleyDickson(w, z);
     let i = 0;
     for (let field in this) {
       result[field] = result_coeffs[i];
@@ -148,8 +148,8 @@ class CayleyDicksonNumber {
   divide(other) {
     let result = new CayleyDicksonNumber([], this.getUnits());
     let w = this.getCoeffs();
-    let z = invert(other.getCoeffs());
-    let result_coeffs = multiplyCayleyDickson(w, z);
+    let z = this._invert(other.getCoeffs());
+    let result_coeffs = this._multiplyCayleyDickson(w, z);
     let i = 0;
     for (let field in this) {
       result[field] = result_coeffs[i];
@@ -275,5 +275,5 @@ function operateOnCayleyDickson(e) {
   } else {
     alert("Enter a valid input!")
   }
-  
+
 }
