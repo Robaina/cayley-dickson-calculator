@@ -85,15 +85,16 @@ Number.prototype.countDecimals = function () {
 // Bartok: 6 romanian dances for violin and piano => good stuff
 class CayleyDicksonNumber {
 
-  constructor(number=[], units=[], dim=4) {
+  constructor(number=[], units=[]) {
 
     if (typeof number === "string") {
       let parsed_number = this.parseNumberString(number);
       number = parsed_number.coeffs;
       units = parsed_number.units;
     }
-    let dim = number.length;
-    
+
+    let dim = number.length > 0 ? number.length : units.length;
+
     if (number.length < 1) {
       for (let i=0; i<dim; i++) {
         number.push(0);
@@ -102,11 +103,11 @@ class CayleyDicksonNumber {
     }
 
     if (units.length < 1) {
-      for (let i=0; i<number.length;i++) {
+      for (let i=0; i<dim;i++) {
         this[`e_${i}`] = number[i];
       }
     } else {
-      for (let i=0; i<number.length;i++) {
+      for (let i=0; i<dim;i++) {
         this[units[i]] = number[i];
       }
     }
@@ -114,8 +115,7 @@ class CayleyDicksonNumber {
   }
 
   add(other) {
-    let dim = Object.keys(this).length;
-    let result = new CayleyDicksonNumber([], this.getUnits(), dim);
+    let result = new CayleyDicksonNumber([], this.getUnits());
     for (let field in this) {
       result[field] =  this[field] + other[field];
     }
@@ -123,8 +123,7 @@ class CayleyDicksonNumber {
   }
 
   subtract(other) {
-    let dim = Object.keys(this).length;
-    let result = new CayleyDicksonNumber([], this.getUnits(), dim);
+    let result = new CayleyDicksonNumber([], this.getUnits());
     for (let field in this) {
       result[field] =  this[field] - other[field];
     }
@@ -132,12 +131,10 @@ class CayleyDicksonNumber {
   }
 
   multiply(other) {
-    let dim = Object.keys(this).length;
-    let result = new CayleyDicksonNumber([], this.getUnits(), dim); // ADD units here!!
+    let result = new CayleyDicksonNumber([], this.getUnits());
     let w = this.getCoeffs();
     let z = other.getCoeffs();
-    let result_coeffs = multiplyCayleyDickson(w, z); // Something going on here...
-
+    let result_coeffs = multiplyCayleyDickson(w, z);
     let i = 0;
     for (let field in this) {
       result[field] = result_coeffs[i];
@@ -147,8 +144,7 @@ class CayleyDicksonNumber {
   }
 
   divide(other) {
-    let dim = Object.keys(this).length;
-    let result = new CayleyDicksonNumber([], this.getUnits(), dim);
+    let result = new CayleyDicksonNumber([], this.getUnits());
     let w = this.getCoeffs();
     let z = invert(other.getCoeffs());
     let result_coeffs = multiplyCayleyDickson(w, z);
@@ -166,7 +162,7 @@ class CayleyDicksonNumber {
     let is_real_number = number_str.match(letter) === null? true: false;
 
     function parseRealNumber() {
-      return {"coeffs": [parseFloat(number_str), 0], "units": ["", "i"]}
+      return {"coeffs": [parseFloat(number_str)], "units": [""]}
     }
 
     function parseNonRealNumber() {
