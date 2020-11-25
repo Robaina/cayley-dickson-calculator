@@ -255,7 +255,6 @@ class CayleyDicksonNumber {
       return str.slice(0, 1) + str.slice(1).replace(/\+/g," + ").replace(/\-/g, " - ")
     }
   }
-
 }
 
 
