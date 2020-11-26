@@ -89,8 +89,9 @@ input:focus{
   font-size: 2em;
 }
 article {
-  margin-left: 20vw;
-  margin-right: 20vw;
+  margin-top: 5vh;
+  margin-left: 30vw;
+  margin-right: 30vw;
   color: var(--fontColor);
   text-align: justify;
   font-size: 1.5em;
@@ -100,8 +101,8 @@ a {
   color: var(--fancyColor);
 }
 footer {
-  margin-left: 20vw;
-  margin-top: 5vh;
+  margin-left: 30vw;
+  margin-top: 10vh;
   margin-bottom: 5vh;
   font-size: 1.5em;
   z-index: 2;
