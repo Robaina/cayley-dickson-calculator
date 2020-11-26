@@ -103,7 +103,7 @@ footer {
   margin-left: 20vw;
   margin-top: 5vh;
   margin-bottom: 5vh;
-  font-size: 1.5vmax;
+  font-size: 1.5em;
   z-index: 2;
   color: var(--fontColor);
 }
