@@ -11,6 +11,11 @@ let form = document.getElementById("myForm");
 function handleForm(event) { event.preventDefault(); }
 form.addEventListener('submit', handleForm);
 
+
+function typesetInput(e) {
+  // MAthjax doesn't have access to input.value
+}
+
 function operateOnCayleyDickson(e) {
   let selected_operation = e.id;
   let displayed_operation;
@@ -46,5 +51,4 @@ function operateOnCayleyDickson(e) {
   } else {
     alert("Enter a valid input!")
   }
-
 }

@@ -22,7 +22,7 @@
           }
         });
       </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=default" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=default"></script>
 </head>
 
 <body>
@@ -34,11 +34,11 @@
   <div id="input-form">
 
     <form id="myForm">
-      $p =$
-      <input class="number-input" type="text" id="number-p" name="number-p" value="1 + 1i + 2j + 3k + 1E - 2.5I + 1.2J + 3K">
+      $p=$
+      <input class="number-input" type="text" id="number-p" name="number-p" value="1 + 1i + 2j + 3k + 1E - 2.5I + 1.2J + 3K" onchange="typesetInput(this)">
       </br>
-      $q = $
-      <input class="number-input" type="text" id="number-q" name="number-q" value="0 - 0.5i + 2j - 1k - 1.5E + 3.2I + 0.7J - 0.5K">
+      $q=$
+      <input class="number-input" type="text" id="number-q" name="number-q" value="0 - 0.5i + 2j - 1k - 1.5E + 3.2I + 0.7J - 0.5K" onchange="typesetInput(this)">
       </br>
 
       <input type="submit" class="form-button" id="add" value="+" name="operation" onclick="operateOnCayleyDickson(this);">
@@ -75,7 +75,7 @@
 
 
   <footer>
-    <p><a href="https://github.com/Robaina/Octonions">Semidán Robaina Estévez</a>, 2020. <br/>
+    <p><a href="https://github.com/Robaina">Semidán Robaina Estévez</a>, 2020. <br/>
   </footer>
 
   <script src="cayley-dickson.js"></script>
